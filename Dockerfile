@@ -1,10 +1,11 @@
-FROM golang
+FROM golang:alpine
+RUN apk update && apk add libstdc++ g++ git
 
-ADD . /go/src/github.com/hunterlong/ethexporter
-RUN cd /go/src/github.com/hunterlong/ethexporter && go get
-RUN go install github.com/hunterlong/ethexporter
+ADD . /ethexporter
+WORKDIR /ethexporter
+RUN go install
 
-ENV GETH https://mainnet.infura.io
+ENV GETH https://ropsten.infura.io
 ENV PORT 9015
 
 RUN mkdir /app
